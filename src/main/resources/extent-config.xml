@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+    <configuration>
+        <theme>standard</theme>
+        <encoding>UTF-8</encoding>
+
+        <!-- defaults to https -->
+        <protocol>http</protocol>
+
+        <!-- global date format override -->
+        <!-- defaults to yyyy-MM-dd -->
+        <dateFormat>yyyy-MM-dd</dateFormat>
+
+        <!-- global time format override -->
+        <!-- defaults to HH:mm:ss -->
+        <timeFormat>HH:mm:ss</timeFormat>
+
+        <!-- custom javascript -->
+        <scripts>
+            <![CDATA[
+        $(document).ready(function() {
+          
+        });
+      ]]>
+        </scripts>
+
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+            .test-step{
+                color: blue;
+                font-weight: bold;
+            }
+            .node.pass {
+                background: #dfd;
+            }
+            .node.fail {
+                background: #fee8e9;
+            }
+            .node.skip {
+                background: #cbdefb;
+            }
+            .node.warning {
+                background: #fffbdd;
+            }
+            .node.fatal {
+                background: rgba(193, 66, 66, .7);
+            }
+            .node.error {
+                background: #fbdfd1;
+            }
+            .collapsible-header {
+                background-color: transparent;
+            }
+            .node-steps {
+                background: whitesmoke;
+                border-radius: 5px;
+            }
+            div.node-steps>table.bordered>tbody>tr:last-of-type,
+            div.node-steps>table.bordered>tbody>tr:last-of-type > td {
+                border: none !important; /* Just because of original important presence */
+            }
+      ]]>
+        </styles>
+    </configuration>
+</extentreports>
