@@ -10,6 +10,7 @@
 
 package com.example.project;
 
+import com.example.project.utils.Description;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -24,7 +25,9 @@ class AnotherClassDemo extends TestFactory {
 
     @Test
     @DisplayName("My 1st JUnit 5 test! 😎")
+    @Description("Just test description")
     void anotherTest1(TestInfo testInfo) {
+        LOGGER.info("test!");
         logTestName();
         assertEquals("My 1st JUnit 5 test! 😎", testInfo.getDisplayName(), () -> "TestInfo is injected correctly");
     }
@@ -33,7 +36,6 @@ class AnotherClassDemo extends TestFactory {
     void anotherTest2() {
         logTestName();
     }
-
 
     @Test
     void anotherTest3() {

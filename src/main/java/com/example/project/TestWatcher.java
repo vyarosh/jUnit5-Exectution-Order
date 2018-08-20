@@ -10,11 +10,12 @@
 
 package com.example.project;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.example.project.utils.ExtentManager;
 import org.junit.jupiter.api.extension.*;
-import org.junit.platform.engine.TestExecutionResult;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Method;
-import org.apache.log4j.Logger;
 
 import static com.example.project.TestFactory.staticLog;
 
@@ -25,15 +26,16 @@ public class TestWatcher implements
         AfterTestExecutionCallback,
         BeforeAllCallback,
         AfterAllCallback,
-        TestInstancePostProcessor,
-        TestExecutionExceptionHandler {
-    private static ThreadLocal<Method> currentMethods = new ThreadLocal<>();
-    private static ThreadLocal<TestExecutionResult> currentResults = new ThreadLocal<>();
+        TestInstancePostProcessor, TestExecutionExceptionHandler {
 
-    private static final Logger LOGGER = Logger.getLogger(TestWatcher.class);
+    private static final String EXTENT_REPORT = "htmlReport";
+
+    private static ThreadLocal<Method> currentMethods = new ThreadLocal<>();
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
+        //initialize "after all test run hook"
+        context.getStore(ExtensionContext.Namespace.GLOBAL).put(EXTENT_REPORT, new CloseableOnlyOnceResource());
         staticLog("BeforeAll-Callback Hook");
     }
 
@@ -81,5 +83,13 @@ public class TestWatcher implements
         return currentMethods.get();
     }
 
+    private static class CloseableOnlyOnceResource implements ExtensionContext.Store.CloseableResource {
+        private static ExtentReports extentReporter = ExtentManager.getExtent();
 
+        @Override
+        public void close() {
+            //After all tests run hook.
+            extentReporter.flush();
+        }
+    }
 }

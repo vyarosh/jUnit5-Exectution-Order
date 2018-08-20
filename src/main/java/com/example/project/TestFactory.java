@@ -10,9 +10,16 @@
 
 package com.example.project;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.example.project.utils.ExtentManager;
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 
 /**
  * Base test behaviour @before, @after, @rules method tor Test cases and log test results. Web driver initialization.
@@ -20,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestWatcher.class)
 public abstract class TestFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(TestFactory.class);
+    static final Logger LOGGER = Logger.getLogger(TestFactory.class);
     TestInfo testInfo;
 
     @BeforeAll
@@ -37,6 +44,22 @@ public abstract class TestFactory {
     public void setUp(TestInfo testInf) {
         testInfo = testInf;
         LOGGER.debug("@BeforeEach: Starting test... " + testInfo.getTestMethod().get().getName());
+        addTestToReport(testInf);
+    }
+
+    /**
+     * Adds test to {@link ExtentReports} with detected name and description.
+     * Encapsulates "Magic" to extract testName and Description from @Test annotation
+     * and handle possible absence as I failed to find easier way.
+     *
+     * @param   testInfo  {@code Method} current test instance
+     */
+    private static synchronized void addTestToReport(TestInfo testInfo) {
+        if (testInfo.getDisplayName().isEmpty()) {
+            ExtentManager.createTest(testInfo.getTestMethod().toString());
+        } else {
+            ExtentManager.createTest(testInfo.getDisplayName());
+        }
     }
 
     @AfterEach
@@ -60,6 +83,9 @@ public abstract class TestFactory {
 //                break;
 //        }
     }
+
+
+
 
 
     void log(String msg) {
