@@ -92,7 +92,7 @@ public abstract class TestFactory {
 
     void delay() {
         try{
-            Thread.sleep(10000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             // just move on
         }
