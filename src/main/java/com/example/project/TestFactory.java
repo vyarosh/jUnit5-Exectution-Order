@@ -90,4 +90,12 @@ public abstract class TestFactory {
         return "@Test " + testInfo.getTestMethod().get().getName() + "() - Fail";
     }
 
+    void delay() {
+        try{
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            // just move on
+        }
+    }
+
 }

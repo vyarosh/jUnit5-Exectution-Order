@@ -13,23 +13,30 @@ package com.example.project;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Execution(ExecutionMode.CONCURRENT)
 class SingleClassDemo extends TestFactory {
 
     @Test
     void test1() {
         logTestName();
+        delay();
     }
  
     @Test
     @Tag("slow")
     void test2() {
         logTestName();
+        delay();
     }
 
     @Test
     void test3() {
+        delay();
         fail(getFailMessage());
     }
 
@@ -37,5 +44,6 @@ class SingleClassDemo extends TestFactory {
     @Test
     void test4() {
         logSkipTest();
+        delay();
     }
 }

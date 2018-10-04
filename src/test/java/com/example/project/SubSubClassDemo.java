@@ -12,22 +12,29 @@ package com.example.project;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Execution(ExecutionMode.CONCURRENT)
 class SubSubClassDemo extends SubClassDemo {
 
     @Test
     void subSubTest1() {
         logTestName();
+        delay();
     }
 
     @Test
     void subSubTest2() {
         logTestName();
+        delay();
     }
 
     @Test
     void subSubTest3() {
+        delay();
         fail(getFailMessage());
     }
 
@@ -35,5 +42,6 @@ class SubSubClassDemo extends SubClassDemo {
     @Test
     void subSubTest4() {
         logSkipTest();
+        delay();
     }
 }

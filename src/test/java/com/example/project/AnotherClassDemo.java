@@ -15,11 +15,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @Tag("fast")
+@Execution(ExecutionMode.CONCURRENT)
 class AnotherClassDemo extends TestFactory {
 
     @Test
@@ -27,16 +30,19 @@ class AnotherClassDemo extends TestFactory {
     void anotherTest1(TestInfo testInfo) {
         LOGGER.info("test!");
         logTestName();
+        delay();
         assertEquals("My 1st JUnit 5 test! 😎", testInfo.getDisplayName(), () -> "TestInfo is injected correctly");
     }
  
     @Test
     void anotherTest2() {
         logTestName();
+        delay();
     }
 
     @Test
     void anotherTest3() {
+        delay();
         fail(getFailMessage());
     }
 
@@ -44,6 +50,7 @@ class AnotherClassDemo extends TestFactory {
     @Test
     void anotherTest4() {
         logSkipTest();
+        delay();
     }
 
 }
