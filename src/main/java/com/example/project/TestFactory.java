@@ -43,7 +43,7 @@ public abstract class TestFactory {
     @BeforeEach
     public void setUp(TestInfo testInf) {
         testInfo = testInf;
-        LOGGER.debug("@BeforeEach: Starting test... " + testInfo.getTestMethod().get().getName());
+        staticLog("@BeforeEach: Starting test... " + testInfo.getTestMethod().get().getName());
         addTestToReport(testInf);
     }
 
@@ -64,34 +64,12 @@ public abstract class TestFactory {
 
     @AfterEach
     public void finishTestCase(TestInfo testInfo) {
-//        ExtentManager.createScreenShot(driver);
         LOGGER.debug("@AfterEach: Finishing test... " + testInfo.getTestMethod().get().getName());
-//        switch (testInfo.getStatus()) {
-//            case FAILURE:
-//                ExtentManager.getCurrentReporter().get().log(
-//                        Status.FAIL,
-//                        result.getThrowable().toString(),
-//                        ExtentManager.buildScreenshotMedia(result.getName()));
-//                break;
-//            case SKIP:
-//                ExtentManager.getCurrentReporter().get().skip(result.getThrowable().toString());
-//                break;
-//            case SUCCESS:
-//                ExtentManager.getCurrentReporter().get().info(
-//                        "Last Screen of the test",
-//                        ExtentManager.buildScreenshotMedia(result.getName()));
-//                break;
-//        }
     }
 
 
-
-
-
     void log(String msg) {
-//        String currentClass = Thread.currentThread().getStackTrace()[2].getClassName().replace("test.", "");
         String currentClass = this.toString().replace("test.", "");
-
         System.out.println(currentClass+ ":: \t\t" + msg);
     }
 

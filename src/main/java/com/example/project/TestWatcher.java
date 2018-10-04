@@ -35,6 +35,7 @@ public class TestWatcher implements
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         //initialize "after all test run hook"
+        staticLog("Creating Extent report");
         context.getStore(ExtensionContext.Namespace.GLOBAL).put(EXTENT_REPORT, new CloseableOnlyOnceResource());
         staticLog("BeforeAll-Callback Hook");
     }
@@ -89,6 +90,7 @@ public class TestWatcher implements
         @Override
         public void close() {
             //After all tests run hook.
+            staticLog("Writing Report...");
             extentReporter.flush();
         }
     }
