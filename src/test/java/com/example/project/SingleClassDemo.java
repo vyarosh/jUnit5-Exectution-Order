@@ -18,6 +18,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Tag("fast")
 @Execution(ExecutionMode.CONCURRENT)
 class SingleClassDemo extends TestFactory {
 

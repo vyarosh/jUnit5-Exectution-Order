@@ -10,6 +10,7 @@
 
 package com.example.project;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.parallel.Execution;
@@ -27,6 +28,7 @@ class SubClassDemo extends SingleClassDemo {
     }
  
     @Test
+    @Tag("slow")
     void subTest2() {
         logTestName();
         delay();

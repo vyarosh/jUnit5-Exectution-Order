@@ -14,7 +14,17 @@
 		<junit.jupiter.version>5.3.1</junit.jupiter.version>
 		<junit.vintage.version>5.3.1</junit.vintage.version>
 		<junit.platform.version>1.3.1</junit.platform.version>
+		<suites>fast</suites>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>allTests</id>
+			<properties>
+				<suites>slow</suites>
+			</properties>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
@@ -31,12 +41,8 @@
 				<version>2.22.0</version>
 				<configuration>
 					<properties>
-						<!-- <includeTags>fast</includeTags> -->
-						<excludeTags>slow</excludeTags>
-						<configurationParameters>
-							junit.jupiter.execution.parallel.enabled = true
-							junit.jupiter.execution.parallel.config.strategy = fixed
-						</configurationParameters>
+						<groups>${suites}</groups>
+						<excludedGroups>slow</excludedGroups>
 					</properties>
 				</configuration>
 				<dependencies>
