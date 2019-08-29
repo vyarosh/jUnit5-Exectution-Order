@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 /**
  * Base test behaviour @before, @after, @rules method tor Test cases and log test results. Web driver initialization.
  */
-@ExtendWith(TestWatcher.class)
+@ExtendWith(ExampleTestWatcher.class)
 public abstract class TestFactory {
 
     static final Logger LOGGER = Logger.getLogger(TestFactory.class);

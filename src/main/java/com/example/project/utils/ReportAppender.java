@@ -7,7 +7,7 @@ package com.example.project.utils;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.example.project.TestWatcher;
+import com.example.project.ExampleTestWatcher;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
@@ -43,7 +43,7 @@ public class ReportAppender extends org.apache.log4j.AppenderSkeleton {
                     testReporter.log(
                             Status.ERROR,
                             event.getMessage().toString(),
-                            ExtentManager.buildScreenshotMedia(TestWatcher.getTestMethod().getName()));
+                            ExtentManager.buildScreenshotMedia(ExampleTestWatcher.getTestMethod().getName()));
                     break;
                 case Level.WARN_INT:
                     testReporter.warning(event.getMessage().toString());

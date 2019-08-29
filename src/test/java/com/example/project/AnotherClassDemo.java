@@ -15,12 +15,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @Tag("fast")
 @Execution(ExecutionMode.CONCURRENT)
@@ -39,6 +39,7 @@ class AnotherClassDemo extends TestFactory {
     void anotherTest2() {
         logTestName();
         delay();
+        assumeTrue(2 > 3);
     }
 
     @Test

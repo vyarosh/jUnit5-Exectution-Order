@@ -16,6 +16,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @Execution(ExecutionMode.CONCURRENT)
 class SubSubClassDemo extends SubClassDemo {
@@ -29,7 +30,7 @@ class SubSubClassDemo extends SubClassDemo {
     @Test
     void subSubTest2() {
         logTestName();
-        delay();
+        assumeTrue(2 > 3);
     }
 
     @Test

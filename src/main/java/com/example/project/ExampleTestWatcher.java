@@ -16,37 +16,39 @@ import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 import static com.example.project.TestFactory.staticLog;
 
-public class TestWatcher implements
+public class ExampleTestWatcher implements
         BeforeEachCallback,
         AfterEachCallback,
         BeforeTestExecutionCallback,
         AfterTestExecutionCallback,
         BeforeAllCallback,
         AfterAllCallback,
-        TestInstancePostProcessor, TestExecutionExceptionHandler {
+        TestInstancePostProcessor, TestExecutionExceptionHandler, TestWatcher  {
 
     private static final String EXTENT_REPORT = "htmlReport";
 
     private static ThreadLocal<Method> currentMethods = new ThreadLocal<>();
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
         //initialize "after all test run hook"
+        // NOTE!! executed once for each class...
         staticLog("Creating Extent report");
         context.getStore(ExtensionContext.Namespace.GLOBAL).put(EXTENT_REPORT, new CloseableOnlyOnceResource());
         staticLog("BeforeAll-Callback Hook");
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         staticLog("BeforeAll-Callback Hook");
     }
 
     @Override
-    public void beforeTestExecution(ExtensionContext context) throws Exception {
+    public void beforeTestExecution(ExtensionContext context) {
         staticLog("BeforeTestExecution-Callback Hook");
         currentMethods.set(context.getRequiredTestMethod());
     }
@@ -58,25 +60,46 @@ public class TestWatcher implements
     }
 
     @Override
-    public void afterTestExecution(ExtensionContext context) throws Exception {
+    public void testAborted(ExtensionContext extensionContext, Throwable throwable) {
+        staticLog("ABORTED");
+    }
+
+    @Override
+    public void testDisabled(ExtensionContext extensionContext, Optional<String> optional) {
+        staticLog("DISABLED");
+    }
+
+    @Override
+    public void testFailed(ExtensionContext extensionContext, Throwable throwable) {
+        staticLog("FAILED");
+    }
+
+    @Override
+    public void testSuccessful(ExtensionContext extensionContext) {
+        staticLog("PASSED");
+    }
+
+    @Override
+    public void afterTestExecution(ExtensionContext context) {
         staticLog("AfterTestExecution-Callback Hook");
-        Boolean testResult = context.getExecutionException().isPresent();
-        staticLog(testResult ? "FAILED" : "PASSED"); //false - SUCCESS, true - FAILED
+        /* Test results resolving for JUnit version < 5.4.0 */
+//        Boolean testResult = context.getExecutionException().isPresent();
+//        staticLog(testResult ? "FAILED" : "PASSED"); //false - SUCCESS, true - FAILED
         currentMethods.remove();
     }
 
     @Override
-    public void afterEach(ExtensionContext context) throws Exception {
+    public void afterEach(ExtensionContext context) {
         staticLog("AfterEach-Callback Hook");
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
         staticLog("AfterAll-Callback Hook");
     }
 
     @Override
-    public void postProcessTestInstance(Object testInstance, ExtensionContext context) throws Exception {
+    public void postProcessTestInstance(Object testInstance, ExtensionContext context) {
         staticLog("TestInstancePostProcessor Hook");
     }
 
