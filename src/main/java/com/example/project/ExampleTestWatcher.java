@@ -29,7 +29,7 @@ public class ExampleTestWatcher implements
         AfterAllCallback,
         TestInstancePostProcessor, TestExecutionExceptionHandler, TestWatcher  {
 
-    private static final String EXTENT_REPORT = "htmlReport";
+    private static final String HTML_REPORT = "htmlReport";
 
     private static ThreadLocal<Method> currentMethods = new ThreadLocal<>();
 
@@ -37,8 +37,8 @@ public class ExampleTestWatcher implements
     public void beforeAll(ExtensionContext context) {
         //initialize "after all test run hook"
         // NOTE!! executed once for each class...
-        staticLog("Creating Extent report");
-        context.getStore(ExtensionContext.Namespace.GLOBAL).put(EXTENT_REPORT, new CloseableOnlyOnceResource());
+        staticLog("Creating Html report");
+        context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(HTML_REPORT, new CloseableOnlyOnceResource());
         staticLog("BeforeAll-Callback Hook");
     }
 
@@ -113,7 +113,7 @@ public class ExampleTestWatcher implements
         @Override
         public void close() {
             //After all tests run hook.
-            staticLog("Writing Report...");
+            staticLog("Writing Html Report...");
             extentReporter.flush();
         }
     }

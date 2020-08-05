@@ -19,33 +19,31 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@Tag("fast")
 @Execution(ExecutionMode.CONCURRENT)
-class SubClassDemo extends SingleClassDemo {
+class SingleClassDemoTest extends TestFactory {
 
     @Test
-    void subTest1() {
+    void test1() {
         logTestName();
-        delay();
     }
- 
-    @Test
+
     @Tag("slow")
-    void subTest2() {
+    @Test
+    void test2() {
         logTestName();
         delay();
         assumeTrue(2 > 3);
     }
 
     @Test
-    void subTest3() {
-        delay();
+    void test3() {
         fail(getFailMessage());
     }
 
     @Disabled("Ignored message for demo purposes")
     @Test
-    void subTest4() {
+    void test4() {
         logSkipTest();
-        delay();
     }
 }

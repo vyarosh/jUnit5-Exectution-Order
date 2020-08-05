@@ -10,7 +10,6 @@
 
 package com.example.project;
 
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.parallel.Execution;
@@ -19,34 +18,28 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-@Tag("fast")
 @Execution(ExecutionMode.CONCURRENT)
-class SingleClassDemo extends TestFactory {
+class SubSubClassDemoTest extends SubClassDemoTest {
 
     @Test
-    void test1() {
+    void subSubTest1() {
         logTestName();
-        delay();
     }
- 
+
     @Test
-    @Tag("slow")
-    void test2() {
+    void subSubTest2() {
         logTestName();
-        delay();
         assumeTrue(2 > 3);
     }
 
     @Test
-    void test3() {
-        delay();
+    void subSubTest3() {
         fail(getFailMessage());
     }
 
     @Disabled("Ignored message for demo purposes")
     @Test
-    void test4() {
+    void subSubTest4() {
         logSkipTest();
-        delay();
     }
 }

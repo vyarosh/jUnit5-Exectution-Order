@@ -10,39 +10,45 @@
 
 package com.example.project;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+@Tag("fast")
 @Execution(ExecutionMode.CONCURRENT)
-class SubSubClassDemo extends SubClassDemo {
+class AnotherClassDemoTest extends TestFactory {
 
     @Test
-    void subSubTest1() {
+    @DisplayName("My 1st JUnit 5 test! 😎")
+    void anotherTest1(TestInfo testInfo) {
+        LOGGER.info("test!");
         logTestName();
-        delay();
+        assertEquals("My 1st JUnit 5 test! 😎", testInfo.getDisplayName(), () -> "TestInfo is injected correctly");
     }
-
+ 
     @Test
-    void subSubTest2() {
+    void anotherTest2() {
         logTestName();
         assumeTrue(2 > 3);
     }
 
     @Test
-    void subSubTest3() {
-        delay();
+    void anotherTest3() {
         fail(getFailMessage());
     }
 
     @Disabled("Ignored message for demo purposes")
     @Test
-    void subSubTest4() {
+    void anotherTest4() {
         logSkipTest();
-        delay();
     }
+
 }
