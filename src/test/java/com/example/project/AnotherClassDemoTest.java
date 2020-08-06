@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v2.0 which
@@ -42,6 +42,7 @@ class AnotherClassDemoTest extends TestFactory {
 
     @Test
     void anotherTest3() {
+        LOGGER.info("test");
         fail(getFailMessage());
     }
 

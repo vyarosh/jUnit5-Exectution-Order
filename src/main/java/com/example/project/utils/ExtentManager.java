@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v2.0 which
@@ -10,11 +10,13 @@
 
 package com.example.project.utils;
 
+import ch.qos.logback.core.util.Loader;
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.helpers.Loader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.util.UUID;
  */
 public class ExtentManager {
 
-    private static final Logger LOGGER = Logger.getLogger(ExtentManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExtentManager.class);
 
     private static ExtentReports extent;
     private static ThreadLocal<ExtentTest> extentTest = new ThreadLocal<>();
@@ -67,7 +69,6 @@ public class ExtentManager {
             return extent; //avoid creating new instance of html file
         extent = new ExtentReports();
         extent.setAnalysisStrategy(AnalysisStrategy.CLASS);
-        //TODO: implement runner system detection and get values from {@link SessionConfig
         extent.setSystemInfo("os", "Solaris");
         extent.attachReporter(getHtmlReporter());
         return extent;
@@ -112,10 +113,12 @@ public class ExtentManager {
      * Holds all Extent HTML Report configuration.
      */
     private static void setupHtmlReporter() {
-        //TODO: investigate this really fix the spaces in project folders.
-        // Otherwise try: 1) .properties file; 2) move all from xml to .confg() calls as commented lower
+        //TODO: investigate whether it really fix the path to the project folder with spaces.
+        // Otherwise try: 1) .properties file; 2) move all from xml to .config() calls as commented lower
         try {
-            htmlReporter.loadXMLConfig(URLDecoder.decode(Loader.getResource(EXTENT_CONFIG_FILE_NAME).getFile(), "UTF-8"));
+            htmlReporter.loadXMLConfig(URLDecoder.decode(
+                    Loader.getResource(EXTENT_CONFIG_FILE_NAME, ClassLoader.getSystemClassLoader()).getFile(),
+                    "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             throw new QaRuntimeException("Failed to decode "+EXTENT_CONFIG_FILE_NAME + "form resource folder ", e);
         }

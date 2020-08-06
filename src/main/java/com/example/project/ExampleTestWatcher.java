@@ -35,8 +35,7 @@ public class ExampleTestWatcher implements
 
     @Override
     public void beforeAll(ExtensionContext context) {
-        //initialize "after all test run hook"
-        // NOTE!! executed once for each class...
+        /* initialize "after all test run hook" NOTE!! executed once for each class... */
         staticLog("Creating Html report");
         context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put(HTML_REPORT, new CloseableOnlyOnceResource());
         staticLog("BeforeAll-Callback Hook");
@@ -61,30 +60,27 @@ public class ExampleTestWatcher implements
 
     @Override
     public void testAborted(ExtensionContext extensionContext, Throwable throwable) {
-        staticLog("ABORTED");
+        staticLog("test ABORTED hook");
     }
 
     @Override
     public void testDisabled(ExtensionContext extensionContext, Optional<String> optional) {
-        staticLog("DISABLED");
+        staticLog("test DISABLED hook");
     }
 
     @Override
     public void testFailed(ExtensionContext extensionContext, Throwable throwable) {
-        staticLog("FAILED");
+        staticLog("test FAILED hook");
     }
 
     @Override
     public void testSuccessful(ExtensionContext extensionContext) {
-        staticLog("PASSED");
+        staticLog("test PASSED hook");
     }
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
         staticLog("AfterTestExecution-Callback Hook");
-        /* Test results resolving for JUnit version < 5.4.0 */
-//        Boolean testResult = context.getExecutionException().isPresent();
-//        staticLog(testResult ? "FAILED" : "PASSED"); //false - SUCCESS, true - FAILED
         currentMethods.remove();
     }
 
@@ -113,7 +109,7 @@ public class ExampleTestWatcher implements
         @Override
         public void close() {
             //After all tests run hook.
-            staticLog("Writing Html Report...");
+            staticLog("After all tests hook...");
             extentReporter.flush();
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v2.0 which
@@ -12,7 +12,8 @@ package com.example.project;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.example.project.utils.ExtentManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,8 +28,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(ExampleTestWatcher.class)
 public abstract class TestFactory {
 
-    static final Logger LOGGER = Logger.getLogger(TestFactory.class);
-    TestInfo testInfo;
+    static final Logger LOGGER = LoggerFactory.getLogger(TestFactory.class);
+    private TestInfo testInfo;
 
     @BeforeAll
     static void setUpAll() {
@@ -64,7 +65,7 @@ public abstract class TestFactory {
 
     @AfterEach
     public void finishTestCase(TestInfo testInfo) {
-        LOGGER.debug("@AfterEach: Finishing test... " + testInfo.getTestMethod().get().getName());
+        LOGGER.info("@AfterEach: Finishing test... " + testInfo.getTestMethod().get().getName());
     }
 
 
@@ -76,6 +77,7 @@ public abstract class TestFactory {
     static void staticLog(String msg) {
         String currentClass = Thread.currentThread().getStackTrace()[2].getClassName().replace("test.", "");
         System.out.println(msg + " \t\t<< " + currentClass);
+//        LOGGER.info(msg + " \t\t<< " + currentClass);
     }
 
     void logTestName() {
